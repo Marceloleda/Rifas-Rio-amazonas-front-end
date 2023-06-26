@@ -23,3 +23,14 @@ export function signIn(body) {
 export function createPaymentToPlan(typePlan) {
   return api.post(`/plan/${typePlan}`);
 }
+
+export function findPlans(){
+  return api.get("/plans/all");
+}
+
+export function findUser(){
+  return api.get("/seller/search")
+}
+export function createRaffle(body){
+  return api.post("/raffle")
+}

@@ -1,9 +1,8 @@
 'use client'
 
-import Image from 'next/image'
-import styles from './page.module.css'
 import { styled } from 'styled-components'
 import Header from '@/components/header'
+import Plans from '@/components/plans'
 
 export default function Home() {
   return (
@@ -17,9 +16,9 @@ export default function Home() {
           </h2>
           <h3>
             Aproveite a oportunidade e faça parte desse universo!
-
           </h3>
         </Description>
+        <Plans/>
       </Conteiner>
     </>
   )
@@ -28,6 +27,7 @@ const Conteiner = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
+align-items: center;
 `;
 
 const Description = styled.div`
@@ -47,7 +47,6 @@ text-align:center;
   }
   h3{
     font-family: 'Nunito', sans-serif;
-
     color: #605e5e;
   }
 

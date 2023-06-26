@@ -1,9 +1,14 @@
+"use client";
 import { styled } from "styled-components"
 import Image from 'next/image';
 import Logo from '../../assets/images/logo.png'
 import Link from "next/link";
 
 export default function Header(){
+    let TOKEN;
+    if (typeof window !== 'undefined') {
+        TOKEN = localStorage.getItem('token');
+     }    
     return (
         <Conteiner>
             <Image
@@ -13,17 +18,21 @@ export default function Header(){
                height={75} 
             />
             <h1>Rifas Rio Amazonas</h1>
+                {TOKEN? 
+                <Link href="/seller" style={{ textDecoration: 'none' }}><h2>Meu Painel</h2></Link> :
+
                 <Link href="/auth-login" style={{ textDecoration: 'none' }}>
                     <h2>Login</h2>
                 </Link>
+                }
         </Conteiner>
     )
 }
 const Conteiner = styled.div`
     background-color: #ff847c; 
     box-sizing: border-box;
-    padding: 20px;
-  
+    width: 100%;
+    padding: 15px;
     display: flex; 
     justify-content: space-between;
     align-items: center;
