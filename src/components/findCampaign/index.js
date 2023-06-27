@@ -1,8 +1,11 @@
 import { findCampaigns } from "@/services/api";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { useRouter } from 'next/navigation';
+
 
 export default function FindCampaign(){
+    const router = useRouter()
     const [campaignsData, setCampaignData] = useState([])
     useEffect(()=>{
         findCampaigns()
@@ -14,8 +17,8 @@ export default function FindCampaign(){
                 console.log(err.message)
             })
     },[])
-    const handleViewDetails = (id) => {
-        // Lógica para exibir os detalhes da campanha com o ID fornecido
+    const handleViewRaffle = (id) => {
+        router.push(`/raffle/${id}`)
       };
     const rafflesCard = campaignsData.map((data, id)=>{
         return(
@@ -24,7 +27,7 @@ export default function FindCampaign(){
                 <h2>Total de cotas: {data.total_tickets}</h2>
                 <h2>Valor: R$ {data.ticket_price}</h2>
                 <h3>Expira em: {data.expire_at}</h3>
-                <Button onClick={() => handleViewDetails(data.id)}>Ver pagina da Rifa</Button>
+                <Button onClick={() => handleViewRaffle(data.id)}>Ver pagina da Rifa</Button>
             </Raffle>
         )
     })
