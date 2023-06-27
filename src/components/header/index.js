@@ -1,14 +1,18 @@
-"use client";
+"use client"
+
 import { styled } from "styled-components"
 import Image from 'next/image';
 import Logo from '../../assets/images/logo.png'
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Header(){
-    let TOKEN;
-    if (typeof window !== 'undefined') {
-        TOKEN = localStorage.getItem('token');
-     }    
+    const [token, setToken] = useState(null);
+  
+    useEffect(() => {
+      const storedToken = localStorage.getItem('token');
+      setToken(storedToken);
+    }, []);
     return (
         <Conteiner>
             <Image
@@ -18,7 +22,7 @@ export default function Header(){
                height={75} 
             />
             <h1>Rifas Rio Amazonas</h1>
-                {TOKEN? 
+                {token? 
                 <Link href="/seller" style={{ textDecoration: 'none' }}><h2>Meu Painel</h2></Link> :
 
                 <Link href="/auth-login" style={{ textDecoration: 'none' }}>

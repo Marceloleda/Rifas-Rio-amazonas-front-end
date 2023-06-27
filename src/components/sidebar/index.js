@@ -1,23 +1,18 @@
 'use client'
-import { findUser } from "@/services/api";
-import { useEffect, useState } from "react";
 import { styled } from "styled-components"
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
 
 //colocar a logo RA
-export default function Sidebar(){
+export default function Sidebar({onFindCampaign}){
     const router = useRouter()
-    const [user, setUser] = useState({})
-    useEffect(()=>{
-        findUser()
-            .then((res)=>{
-                console.log(res.data)
-                setUser(res.data)
-            })
-            .catch((err=>{
-                console.log(err.message)
-            }))
-    },[])
+    const [refreshing, setRefreshing] = useState(false);
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        window.location.reload();
+      };
+
     const exit = ()=>{
         localStorage.setItem("token", '')
         alert("Desconectado")
@@ -28,11 +23,12 @@ export default function Sidebar(){
             <Titlle>Rifas Rio Amazonas</Titlle>
             <User>
                 <h2>
-                    Bem vindo ao seu painel {user.name} :)
+                    Bem vindo ao seu painel :)
                 </h2>
             </User>
+            <Option onClick={handleRefresh} disabled={refreshing}>Home</Option>
             <Option>Buscar ganhador</Option>
-            <Option>Minhas Campanhas</Option>
+            <Option onClick={onFindCampaign}>Minhas Campanhas</Option>
             <Option>Minha Conta</Option>
             <Option>Suporte</Option>
             <Exit onClick={(()=>{exit()})}>Sair da conta</Exit>

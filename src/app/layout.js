@@ -14,7 +14,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <StyledComponentsRegistry>
-        <body className={inter.className}>
+        <body className={inter.className} 
+        suppressHydrationWarning={true} >
           {children}
         </body>
       </StyledComponentsRegistry>

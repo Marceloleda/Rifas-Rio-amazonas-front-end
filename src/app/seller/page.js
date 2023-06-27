@@ -1,23 +1,54 @@
 'use client'
 
+import { findUser } from "@/services/api";
 import Sidebar from "@/components/sidebar";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';
-
+import { useEffect, useState } from "react";
+import CreateCampaign from "../../components/createCampaign/page";
+import FindCampaign from "@/components/findCampaign";
 
 export default function Seller(){
     const router = useRouter()
+    const [showCreateCampaign, setShowCreateCampaign] = useState(false);
+    const [showFindCampaign, setShowFindCampaign] = useState(false);
+    const [user, setUser] = useState({})
+
+    const handleCreateCampaign = () => {
+        setShowCreateCampaign(true);
+        setShowFindCampaign(false);
+      };
+    
+      const handleFindCampaign = () => {
+        setShowFindCampaign(true);
+        setShowCreateCampaign(false);
+      };
+
+    useEffect(()=>{
+        findUser()
+            .then((res)=>{
+                console.log(res.data)
+                setUser(res.data)
+            })
+            .catch((err=>{
+                console.log(err.message)
+            }))
+    },[])
+
     return (
         <SellerPageWrapper>
-            <Sidebar/>
+            <Sidebar onFindCampaign={handleFindCampaign}/>
             <SellerPage>
+
                 <HeaderMini>
                     <h1>Dashboard</h1>
                 </HeaderMini>
-                <Block onClick={(()=>{router.push("/campaign")})}>
-                    Criar Campanha
-                </Block>
-
+                <h2>Saldo: {user.total_ticket_plan}</h2>
+                {(!showCreateCampaign && !showFindCampaign) && (
+                    <Block onClick={handleCreateCampaign}>Criar Campanha</Block>
+                )}
+                {showCreateCampaign && <CreateCampaign />}
+                {showFindCampaign && <FindCampaign />}
             </SellerPage>
         </SellerPageWrapper>
     )
@@ -31,6 +62,9 @@ padding: 20px;
 flex:1;
 box-sizing: border-box;
 background: #f2f2f2;
+h2{
+    margin-bottom: 50px;
+}
 `;
 const SellerPageWrapper = styled.div`
   display: flex;

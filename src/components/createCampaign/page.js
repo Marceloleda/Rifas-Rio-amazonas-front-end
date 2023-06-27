@@ -4,20 +4,19 @@ import styled from "styled-components";
 import { createRaffle } from "@/services/api";
 import { useRouter } from 'next/navigation';
 
+
 export default function CreateCampaign() {
     const router = useRouter()
   const [campaignData, setCampaignData] = useState({
     title: "",
     description: "",
-    ticket_price: "",
+    ticket_price:"",
     total_tickets: "",
-    end_date: "",
   });
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    createRaffle(campaignData)
+    const totalTicketsNumber = parseInt(campaignData.total_tickets, 10);
+    createRaffle({...campaignData, total_tickets: totalTicketsNumber})
       .then((res) => {
         alert("Cadastrado com sucesso!");
         router.push("/seller")
@@ -36,18 +35,29 @@ export default function CreateCampaign() {
         console.log(err.message);
       });
   };
-
+  function formatDecimal(value) {
+    let sanitized = value.replace(/[^0-9]/g, '');
+  
+    let numericValue = Number(sanitized);
+  
+    if (!isNaN(numericValue)) {
+      let formattedValue = (numericValue / 100).toFixed(2);
+  
+      setCampaignData({ ...campaignData, ticket_price: formattedValue });
+    }
+  }
+  
+  
   return (
     <>
       <Conteiner>
-        <h1>Rifas Rio Amazonas</h1>
         <h4>Criar Campanha</h4>
 
         <Forms>
           <form onSubmit={handleFormSubmit}>
             <Inserir
               id="title"
-              placeholder="Título"
+              placeholder="Ex: cb 300f ou 22k no pix"
               value={campaignData.title}
               onChange={(e) =>
                 setCampaignData({ ...campaignData, title: e.target.value })
@@ -56,21 +66,24 @@ export default function CreateCampaign() {
             <Inserir
               id="description"
               type="text"
-              placeholder="Descrição, ex: Pix de 10 mil..."
+              placeholder="Descrição, ex: O sorteio eh baseado..."
               value={campaignData.description}
               onChange={(e) =>
                 setCampaignData({ ...campaignData, description: e.target.value })
               }
             />
+
             <Inserir
               id="ticket_price"
-              type="number"
+              type="text"
               placeholder="Valor de cota"
               value={campaignData.ticket_price}
-              onChange={(e) =>
-                setCampaignData({ ...campaignData, ticket_price: e.target.value })
-              }
+              onChange={(e) => {
+                setCampaignData({ ...campaignData, ticket_price: e.target.value });
+                formatDecimal(e.target.value);
+              }}
             />
+
             <Inserir
               id="total_tickets"
               type="number"
@@ -80,7 +93,8 @@ export default function CreateCampaign() {
                 setCampaignData({ ...campaignData, total_tickets: e.target.value })
               }
             />
-            {/* <Inserir
+            {/* <h2>Data do sorteio</h2>
+            <Inserir
               id="end_date"
               type="date"
               placeholder="Data do sorteio (caso queira colocar)"
@@ -102,10 +116,9 @@ export default function CreateCampaign() {
 const Conteiner = styled.div`
 font-family: 'Raleway';
     display:flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     h1{
         font-family: 'Roboto', sans-serif;
         font-weight: bold;

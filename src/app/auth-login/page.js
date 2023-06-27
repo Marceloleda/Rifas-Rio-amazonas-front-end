@@ -6,10 +6,12 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 import { api, signIn } from "../../services/api";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+
 
 
 export default function Login(){
-    // const navigate = useNavigate();
+    const router = useRouter();
     const [login, setLogin] = useState({
         email: '',
         password_hash: ''
@@ -25,7 +27,7 @@ export default function Login(){
             localStorage.setItem("token", response.data.Token)
 
             alert('logado com sucesso')
-            // navigate("/home");
+            router.push("/");
         })
             .catch(err => {
             Swal.fire({
@@ -76,9 +78,9 @@ const Conteiner = styled.div`
     flex-direction: column;
     height: 100vh;
     h1{
-        font-family: 'Saira Stencil One', cursive;
+        font-family: 'Roboto', sans-serif;
         font-size: 32px;
-        color:white;
+        color:black;
     }
 `;
 const Forms = styled.div`
