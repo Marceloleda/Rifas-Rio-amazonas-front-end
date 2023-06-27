@@ -22,6 +22,7 @@ export default function FindCampaign(){
             <Raffle key= {id}>
                 <h1>Rifa: {data.title}</h1>
                 <h2>Total de cotas: {data.total_tickets}</h2>
+                <h2>Valor: R$ {data.ticket_price}</h2>
                 <h3>Expira em: {data.expire_at}</h3>
                 <Button onClick={() => handleViewDetails(data.id)}>Ver pagina da Rifa</Button>
             </Raffle>
@@ -51,7 +52,6 @@ const Raffle = styled.div`
   margin: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;

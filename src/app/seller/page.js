@@ -43,7 +43,10 @@ export default function Seller(){
                 <HeaderMini>
                     <h1>Dashboard</h1>
                 </HeaderMini>
-                <h2>Saldo: {user.total_ticket_plan}</h2>
+                <DataUser>
+                    <h3>Saldo: {user.total_ticket_plan}</h3>
+                    <h3>{user.plans?.name}</h3>                
+                </DataUser>
                 {(!showCreateCampaign && !showFindCampaign) && (
                     <Block onClick={handleCreateCampaign}>Criar Campanha</Block>
                 )}
@@ -102,5 +105,19 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 `;
 const Blocks = styled.div`
 display: flex;
+
+`;
+const DataUser = styled.div`
+margin-bottom: 50px;
+height: 50px;
+box-sizing: border-box;
+padding: 20px;
+
+display:flex;
+justify-content: space-between;
+align-items: center;
+border-radius: 20px;
+border: 1px solid black;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 `;
