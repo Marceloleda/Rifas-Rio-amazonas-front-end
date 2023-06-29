@@ -17,5 +17,9 @@
     "react-spinners": "^0.13.8",
     "styled-components": "^6.0.0-rc.1",
     "sweetalert2": "^11.7.12"
+  },
+  "devDependencies": {
+    "@types/node": "20.3.2",
+    "@types/react": "18.2.14"
   }
 }

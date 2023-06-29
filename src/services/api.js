@@ -37,3 +37,6 @@ export function createRaffle(body){
 export function findCampaigns(){
   return api.get("/seller/campaigns")
 }
+export function findRaffle(raffleId, slug){
+  return api.get(`/raffle/${raffleId}/${slug}`)
+}

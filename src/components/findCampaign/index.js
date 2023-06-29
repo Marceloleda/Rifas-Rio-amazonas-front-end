@@ -17,8 +17,10 @@ export default function FindCampaign(){
                 console.log(err.message)
             })
     },[])
-    const handleViewRaffle = (id) => {
-        router.push(`/raffle/${id}`)
+    const handleViewRaffle = (id, title) => {
+        const title_ = title.replace(/ /g, "-")
+        
+        router.push(`/raffle/${id}/${title_}`)
       };
     const rafflesCard = campaignsData.map((data, id)=>{
         return(
@@ -27,7 +29,7 @@ export default function FindCampaign(){
                 <h2>Total de cotas: {data.total_tickets}</h2>
                 <h2>Valor: R$ {data.ticket_price}</h2>
                 <h3>Expira em: {data.expire_at}</h3>
-                <Button onClick={() => handleViewRaffle(data.id)}>Ver pagina da Rifa</Button>
+                <Button onClick={() => handleViewRaffle(data.id, data.title)}>Ver pagina da Rifa</Button>
             </Raffle>
         )
     })
