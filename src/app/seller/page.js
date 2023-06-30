@@ -10,6 +10,7 @@ import FindCampaign from "@/components/findCampaign";
 
 export default function Seller(){
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(true);
     const [showCreateCampaign, setShowCreateCampaign] = useState(false);
     const [showFindCampaign, setShowFindCampaign] = useState(false);
     const [user, setUser] = useState({})
@@ -29,31 +30,42 @@ export default function Seller(){
             .then((res)=>{
                 console.log(res.data)
                 setUser(res.data)
+                setIsLoading(false);
+
             })
             .catch((err=>{
                 console.log(err.message)
+                setIsLoading(false);
             }))
     },[])
 
     return (
-        <SellerPageWrapper>
-            <Sidebar onFindCampaign={handleFindCampaign}/>
-            <SellerPage>
+        <>
+            {isLoading ? (
+              <SpinnerContainer>
+                <StyledSpinner />
+              </SpinnerContainer>
+              ) : (
+                <SellerPageWrapper>
+                    <Sidebar onFindCampaign={handleFindCampaign}/>
+                    <SellerPage>
 
-                <HeaderMini>
-                    <h1>Dashboard</h1>
-                </HeaderMini>
-                <DataUser>
-                    <h3>Saldo: {user.total_ticket_plan}</h3>
-                    <h3>{user.plans?.name}</h3>                
-                </DataUser>
-                {(!showCreateCampaign && !showFindCampaign) && (
-                    <Block onClick={handleCreateCampaign}>Criar Campanha</Block>
-                )}
-                {showCreateCampaign && <CreateCampaign />}
-                {showFindCampaign && <FindCampaign />}
-            </SellerPage>
-        </SellerPageWrapper>
+                        <HeaderMini>
+                            <h1>Dashboard</h1>
+                        </HeaderMini>
+                        <DataUser>
+                            <h3>Saldo: {user.total_ticket_plan}</h3>
+                            <h3>{user.plans?.name}</h3>                
+                        </DataUser>
+                        {(!showCreateCampaign && !showFindCampaign) && (
+                            <Block onClick={handleCreateCampaign}>Criar Campanha</Block>
+                        )}
+                        {showCreateCampaign && <CreateCampaign />}
+                        {showFindCampaign && <FindCampaign />}
+                    </SellerPage>
+                </SellerPageWrapper>
+            )}
+        </>
     )
 }
 
@@ -68,6 +80,30 @@ background: #f2f2f2;
 h2{
     margin-bottom: 50px;
 }
+`;
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background: #f2f2f2;
+  align-items: center;
+  height: 100vh;
+`;
+const StyledSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid purple;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 const SellerPageWrapper = styled.div`
   display: flex;
