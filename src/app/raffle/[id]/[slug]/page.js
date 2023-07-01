@@ -1,5 +1,5 @@
 'use client'
-import { findRaffle } from '@/services/api';
+import { buyTicket, findRaffle } from '@/services/api';
 import Image from 'next/image';
 import picLogo from '../../../../assets/images/picLogo.png'
 import { useEffect, useState } from 'react';
@@ -16,6 +16,21 @@ export default function Page({ params }) {
       })
       .catch((err) => console.log(err.message));
   }, []);
+  const totalPrice = defaultValue * raffle.ticket_price;
+
+  const sendBuyTicket = async () =>{
+    const body = {
+      raffleId: params.id,
+      quantity: defaultValue,
+      total: totalPrice,
+    }
+    console.log(body)
+    buyTicket(body)
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch(err => {console.log(err.message)});
+  }
 
   const handleIncrementSet = (value) => {
     setDefaultValue(defaultValue + value);
@@ -36,6 +51,7 @@ export default function Page({ params }) {
       setDefaultValue(parsedValue);
     }
   };
+
 
   return (
     <Conteiner>
@@ -64,8 +80,8 @@ export default function Page({ params }) {
         />
         <ButtonQuantity onClick={handleIncrement}>+</ButtonQuantity>
       </Quatity>
-
-      <ButtonBuy>Comprar</ButtonBuy>
+      <Total_Value>Total: R${defaultValue * raffle.ticket_price}</Total_Value>
+      <ButtonBuy onClick={sendBuyTicket}>Comprar</ButtonBuy>
     </Conteiner>
   );
 }
@@ -83,7 +99,13 @@ const Conteiner = styled.div`
         color:black;
     }
 `;
+const Total_Value = styled.p`
+font-family: 'Roboto', sans-serif;
+margin-bottom: 30px;
+font-size:35px;
+color:black;
 
+`;
 const ImageRaffle = styled.div`
 background:grey;
 width:350px;

@@ -25,18 +25,25 @@ export function createPaymentToPlan(typePlan) {
 }
 
 export function findPlans(){
-  return api.get("/plans/all");
+  return api.get("/plan/all");
+}
+
+export function buyTicket(body){
+  return api.post(("/buyer/buy", body))
 }
 
 export function findUser(){
   return api.get("/seller/search")
 }
+
 export function createRaffle(body){
   return api.post("/raffle", body)
 }
+
 export function findCampaigns(){
   return api.get("/seller/campaigns")
 }
+
 export function findRaffle(raffleId, slug){
   return api.get(`/raffle/${raffleId}/${slug}`)
 }

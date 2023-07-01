@@ -25,7 +25,6 @@ export default function Login(){
 
             console.log(response.data)
             localStorage.setItem("token", response.data.Token)
-
             alert('logado com sucesso')
             router.push("/");
         })
@@ -37,9 +36,7 @@ export default function Login(){
               });
             console.log(err.message)
         })
-        
     }
-
     return(
         <>
             <Conteiner>
@@ -49,15 +46,12 @@ export default function Login(){
                         <Inserir  id="email" type="email" placeholder="Email" value={login.email} onChange={(e)=>
                         setLogin({...login, email: e.target.value})
                         }required/>
-
                         <Inserir id="password" type="password" placeholder="Senha" value={login.password_hash} onChange={(e)=>
                         setLogin({...login, password_hash: e.target.value})
                         }required/>
 
                         <Botao type="submit">Entrar</Botao>
-
                         <Botao2 type="submit">Entrar com sua conta Google</Botao2>
-
                     </form>
                 </Forms>
 
@@ -66,7 +60,6 @@ export default function Login(){
                         <h2>Primeira vez? Cadastre-se!</h2>
                     </Link>
                 </Cadastro>
-
             </Conteiner>
         </>
     );
