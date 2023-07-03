@@ -10,13 +10,14 @@ export const metadata = {
   description: 'Cria rifas online',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout(props) {
   return (
     <html lang="en">
       <StyledComponentsRegistry>
         <body className={inter.className} 
         suppressHydrationWarning={true} >
-          {children}
+          {props.children}
+          {props.authModal}
         </body>
       </StyledComponentsRegistry>
     </html>

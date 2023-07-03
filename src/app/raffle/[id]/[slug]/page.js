@@ -4,10 +4,15 @@ import Image from 'next/image';
 import picLogo from '../../../../assets/images/picLogo.png'
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { useRouter } from 'next/navigation';
+import { BasicModal } from '@/components/buyerModal/page';
  
-export default function Page({ params }) {
+export default function Page({ params, searchParams }) {
+  const router = useRouter()
   const [raffle, setRaffle] = useState([]);
   const [defaultValue, setDefaultValue] = useState(1);
+  const showModal = searchParams?.modal;
+
 
   useEffect(() => {
     findRaffle(params.id, params.slug)
@@ -17,19 +22,23 @@ export default function Page({ params }) {
       .catch((err) => console.log(err.message));
   }, []);
   const totalPrice = defaultValue * raffle.ticket_price;
-
-  const sendBuyTicket = async () =>{
+  const modal = ()=>{
+    router.push(`${params.slug}/?modal=true`)
+}
+  
+  function sendBuyTicket(event){
+    event.preventDefault();
+    router.push('/buyer')
     const body = {
       raffleId: params.id,
       quantity: defaultValue,
       total: totalPrice,
     }
-    console.log(body)
     buyTicket(body)
     .then((res) => {
       console.log(res.data)
     })
-    .catch(err => {console.log(err.message)});
+    .catch(err => {console.log(err)});
   }
 
   const handleIncrementSet = (value) => {
@@ -80,8 +89,14 @@ export default function Page({ params }) {
         />
         <ButtonQuantity onClick={handleIncrement}>+</ButtonQuantity>
       </Quatity>
-      <Total_Value>Total: R${defaultValue * raffle.ticket_price}</Total_Value>
-      <ButtonBuy onClick={sendBuyTicket}>Comprar</ButtonBuy>
+      <Total_Value>Total: R$ {defaultValue * raffle.ticket_price}</Total_Value>
+      <ButtonBuy onClick={modal}>Comprar</ButtonBuy>
+      {showModal && 
+      <>
+        <BasicModal /> 
+        <Overlay/>
+      </>}
+
     </Conteiner>
   );
 }
@@ -99,6 +114,13 @@ const Conteiner = styled.div`
         color:black;
     }
 `;
+const Overlay = styled.div`
+position: fixed;
+inset: 0;
+background-color: rgba(0, 0, 0, 0.55);
+transition: opacity 0.9s;
+`;
+
 const Total_Value = styled.p`
 font-family: 'Roboto', sans-serif;
 margin-bottom: 30px;

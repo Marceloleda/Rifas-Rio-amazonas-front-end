@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
-import CreateCampaign from "../../components/createCampaign/page";
+import CreateCampaign from "../../components/createCampaign";
 import FindCampaign from "@/components/findCampaign";
 
 export default function Seller(){
