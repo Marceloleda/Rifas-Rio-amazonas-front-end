@@ -1,60 +1,54 @@
 'use client'
 
-import Link from "next/link";
 import { styled } from "styled-components"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { buyTicket } from "@/services/api";
 
 export function BasicModal() {
+  let dataRaffle
+  if (typeof window !== 'undefined') {
+    const bodyString = localStorage.getItem("bodyRaffle");
+    dataRaffle = JSON.parse(bodyString);
+  }
   const router =useRouter()
-  const [cadastro, setCadastro] = useState({
+  const [buyer, setBuyer] = useState({
     name: '',
     email: '',
-    phone_number:'',
-    cpf:'',
-    senha: '',
-    confirmeSenha: ''
+    phone_number:''
 })
 
-function Cadastro(event){
+function sendBuyTicket(event){
   event.preventDefault();
-
-  signUpSend(signUp)
-    .then((res)=>{
-      alert("Cadastrado com sucesso!")
-    })
-    .catch(err=>{
-      if(err.message === "Request failed with status code 409"){
-          alert(`Voce ja esta cadastrado `)
-      }
-      if(err.message === "Request failed with status code 422"){
-        alert(`Verifique se seus dados foram digitados corretamente`)
-      }
-      if(err.message === "Network Error"){
-        alert(`Erro de conexao, tente novamente mais tarde`)
-      }
-           
-      alert(`Verifique seus dados e tente novamente ;-)`)
-        console.log(err.message)
-      })
+  const body = {...buyer, 
+  idRaffle: dataRaffle.raffleId,
+  quantity: dataRaffle.quantity,
+  total: dataRaffle.total
+  }
+  buyTicket(body)
+  .then((res) => {
+    const mercadoPago = res.data?.point_of_interaction?.transaction_data?.ticket_url
+    router.push(mercadoPago)
+  })
+  .catch(err => {console.log(err)});
 }
     return (
       <ModalContainer>
         <ContentWrapper>
           <ModalContent>
-                <h1>Preencha seu dados</h1>
+                <h1>Preencha seus dados</h1>
 
                 <Forms>
-                    <form onSubmit={Cadastro}>
-                        <Inserir id="name" placeholder="Nome completo" value={cadastro.name} onChange={(e)=>
-                        setCadastro({...cadastro, name: e.target.value})
-                        }/>
-                        <Inserir id="email" type="email" placeholder="Email" value={cadastro.email} onChange={(e)=>
-                        setCadastro({...cadastro, email: e.target.value})
-                        }/>
-                        <Inserir id="phone_number" type="phone" placeholder="celular" value={cadastro.phone_number} onChange={(e)=>
-                        setCadastro({...cadastro, phone_number: e.target.value})
-                        }/>
+                    <form onSubmit={sendBuyTicket}>
+                        <Inserir id="name" placeholder="Nome completo" value={buyer.name} onChange={(e)=>
+                        setBuyer({...buyer, name: e.target.value})
+                        } required/>
+                        <Inserir id="email" type="email" placeholder="Email" value={buyer.email} onChange={(e)=>
+                        setBuyer({...buyer, email: e.target.value})
+                        }required/>
+                        <Inserir id="phone_number" type="phone" placeholder="celular" value={buyer.phone_number} onChange={(e)=>
+                        setBuyer({...buyer, phone_number: e.target.value})
+                        }required/>
 
                         <Botao type="submit">Continuar</Botao>
                     </form>

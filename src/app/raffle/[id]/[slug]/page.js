@@ -22,23 +22,17 @@ export default function Page({ params, searchParams }) {
       .catch((err) => console.log(err.message));
   }, []);
   const totalPrice = defaultValue * raffle.ticket_price;
+
   const modal = ()=>{
-    router.push(`${params.slug}/?modal=true`)
-}
-  
-  function sendBuyTicket(event){
-    event.preventDefault();
-    router.push('/buyer')
     const body = {
       raffleId: params.id,
       quantity: defaultValue,
       total: totalPrice,
     }
-    buyTicket(body)
-    .then((res) => {
-      console.log(res.data)
-    })
-    .catch(err => {console.log(err)});
+    const bodyString = JSON.stringify(body);
+    localStorage.setItem("bodyRaffle", bodyString);
+
+    router.push(`${params.slug}/?modal=true`)
   }
 
   const handleIncrementSet = (value) => {
