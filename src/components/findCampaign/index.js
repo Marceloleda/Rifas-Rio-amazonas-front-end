@@ -1,47 +1,56 @@
-import { findCampaigns } from "@/services/api";
+import { deleteOneRaffle, findCampaigns } from "@/services/api";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';
 
+export default function FindCampaign() {
+  const router = useRouter();
+  const [campaignsData, setCampaignData] = useState([]);
 
-export default function FindCampaign(){
-    const router = useRouter()
-    const [campaignsData, setCampaignData] = useState([])
-    useEffect(()=>{
-        findCampaigns()
-            .then((res)=>{
-                console.log(res.data)
-                setCampaignData(res.data)
-            })
-            .catch(err=>{
-                console.log(err.message)
-            })
-    },[])
-    const handleViewRaffle = (id, title) => {
-        const title_ = title.replace(/ /g, "-")
-        
-        router.push(`/raffle/${id}/${title_}`)
-      };
-    const rafflesCard = campaignsData.map((data, id)=>{
-        return(
-            <Raffle key= {id}>
-                <h1>Rifa: {data.title}</h1>
-                <h2>Total de cotas: {data.total_tickets}</h2>
-                <h2>Valor: R$ {data.ticket_price}</h2>
-                <h3>Expira em: {data.expire_at}</h3>
-                <Button onClick={() => handleViewRaffle(data.id, data.title)}>Ver pagina da Rifa</Button>
-                <DeleteButton onClick={() => handleDeleteRaffle(data.id)}>Excluir Rifa</DeleteButton>
+  useEffect(() => {
+    findCampaigns()
+      .then((res) => {
+        console.log(res.data);
+        setCampaignData(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
-            </Raffle>
-        )
-    })
-    return(
-        <Conteiner>
-            {rafflesCard}
-        </Conteiner>
+  const handleViewRaffle = (id, title) => {
+    const title_ = title.replace(/ /g, "-");
+    router.push(`/raffle/${id}/${title_}`);
+  };
+
+  async function deleteRaffle(id) {
+    deleteOneRaffle(id)
+      .then((res) => {
+        console.log(res.data);
+        setCampaignData((prevData) => prevData.filter((data) => data.id !== id));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  const rafflesCard = campaignsData.map((data, id) => {
+    return (
+      <Raffle key={id}>
+        <h1>Rifa: {data.title}</h1>
+        <h2>Total de cotas: {data.total_tickets}</h2>
+        <h2>Valor: R$ {data.ticket_price}</h2>
+        <h3>Expira em: {data.expire_at}</h3>
+        <Button onClick={() => handleViewRaffle(data.id, data.title)}>Ver pagina da Rifa</Button>
+        <DeleteButton onClick={() => deleteRaffle(data.id)}>Excluir Rifa</DeleteButton>
+      </Raffle>
     );
+  });
+
+  return <Container>{rafflesCard}</Container>;
 }
-const Conteiner = styled.div`
+
+const Container = styled.div`
   display: flex;
   justify-content: center;
   justify-content: space-around;
@@ -61,7 +70,7 @@ const Raffle = styled.div`
   flex-direction: column;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative; 
+  position: relative;
 `;
 
 const DeleteButton = styled.button`
@@ -84,23 +93,22 @@ const DeleteButton = styled.button`
 `;
 
 const Button = styled.button`
-position: absolute;
-width: 70%;
-bottom: 60px;
-left: 50%;
-transform: translateX(-50%);
-background-color: #56bc86;
-color: #ffffff;
-border: none;
-border-radius: 5px;
-padding: 8px 16px;
-font-size: 14px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-font-weight: bold;
+  position: absolute;
+  width: 70%;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #56bc86;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
 
-
-&:hover {
-  background-color: #2ce080;
-}
-`;
+  &:hover {
+    background-color: #2ce080;
+  }
+}`;

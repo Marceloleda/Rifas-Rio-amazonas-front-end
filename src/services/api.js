@@ -47,3 +47,7 @@ export function findCampaigns(){
 export function findRaffle(raffleId, slug){
   return api.get(`/raffle/${raffleId}/${slug}`)
 }
+
+export function deleteOneRaffle(id){
+  return api.delete(`/raffle/delete/${id}`)
+}
