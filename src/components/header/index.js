@@ -32,8 +32,10 @@ export default function Header(){
         </Conteiner>
     )
 }
+
 const Conteiner = styled.div`
-    background-color: #ff847c; 
+    position: fixed;
+    background-color: #D6E5E3; 
     box-sizing: border-box;
     width: 100%;
     padding: 15px;

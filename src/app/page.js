@@ -7,8 +7,8 @@ import Plans from '@/components/plans'
 export default function Home() {
   return (
     <>
-      <Conteiner>
       <Header/>
+      <Conteiner>
         <Description>
           <h1>Conquiste o sucesso com suas rifas! <br/>  </h1>
           <h2>
@@ -28,6 +28,7 @@ display: flex;
 flex-direction: column;
 min-height: 100vh;
 align-items: center;
+padding-top: 80px; 
 `;
 
 const Description = styled.div`
@@ -36,6 +37,7 @@ flex-direction: column;
 margin-top: 40px;
 text-align:center;
   h1{
+    color: #333333;
     font-family: 'Open Sans', sans-serif;
     font-size: 25px; 
     margin-bottom: 40px;
@@ -43,11 +45,11 @@ text-align:center;
   h2{
     font-family: 'Nunito', sans-serif;
     margin-bottom: 25px;
-    color: #605e5e;
+    color: #333333;
   }
   h3{
     font-family: 'Nunito', sans-serif;
-    color: #605e5e;
+    color: #333333;
   }
 
 

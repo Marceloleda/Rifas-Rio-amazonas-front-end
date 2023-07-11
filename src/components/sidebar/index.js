@@ -31,7 +31,10 @@ export default function Sidebar({onFindCampaign}){
             <Option onClick={onFindCampaign}>Minhas Campanhas</Option>
             <Option>Minha Conta</Option>
             <Option>Suporte</Option>
-            <Exit onClick={(()=>{exit()})}>Sair da conta</Exit>
+            <ExitWrapper>
+                <Exit onClick={(()=>{exit()})}>Sair da conta</Exit>                
+            </ExitWrapper>
+
 
 
         </SidebarWrapper>
@@ -39,17 +42,27 @@ export default function Sidebar({onFindCampaign}){
 }
 
 const SidebarWrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-font-family: 'Roboto', sans-serif;
-font-weight: bold;
-
-  width: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  background: #88BDBC;
+  box-shadow: 2px 2px 5px rgba(1, 1, 1, 0.5);
+  width: 250px;
   height: 100vh;
   left: 0;
   top: 0;
   padding: 20px;
+  box-sizing: border-box;
+  border-top-right-radius: 15px; 
+  border-bottom-right-radius: 15px; 
+
+`;
+const ExitWrapper = styled.div`
+    margin-top: auto;
+  margin-bottom: 0; /* Remove a margem inferior */
 `;
 const Titlle = styled.h1`
 font-size: 30px;
@@ -81,6 +94,7 @@ align-items: center;
 height: 50px;
 width:190px;
 cursor: pointer;
+margin-bottom:0px;
 margin: auto;
 background: red;
 &:hover {

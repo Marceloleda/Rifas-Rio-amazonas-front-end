@@ -30,6 +30,8 @@ export default function FindCampaign(){
                 <h2>Valor: R$ {data.ticket_price}</h2>
                 <h3>Expira em: {data.expire_at}</h3>
                 <Button onClick={() => handleViewRaffle(data.id, data.title)}>Ver pagina da Rifa</Button>
+                <DeleteButton onClick={() => handleDeleteRaffle(data.id)}>Excluir Rifa</DeleteButton>
+
             </Raffle>
         )
     })
@@ -40,16 +42,16 @@ export default function FindCampaign(){
     );
 }
 const Conteiner = styled.div`
-display:flex;
-justify-content:center;
-justify-content: space-around;
-flex-direction: wrap;
-height: 100%;
-widght: 100%;
-
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+  flex-direction: wrap;
+  height: 100%;
+  width: 100%;
 `;
+
 const Raffle = styled.div`
-  height: 250px;
+  height: 350px;
   width: 200px;
   border: 1px solid #e2e2e2;
   border-radius: 10px;
@@ -59,9 +61,14 @@ const Raffle = styled.div`
   flex-direction: column;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; 
 `;
 
-const Button = styled.button`
+const DeleteButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #ff847c;
   color: #ffffff;
   border: none;
@@ -74,4 +81,26 @@ const Button = styled.button`
   &:hover {
     background-color: #e74c3c;
   }
+`;
+
+const Button = styled.button`
+position: absolute;
+width: 70%;
+bottom: 60px;
+left: 50%;
+transform: translateX(-50%);
+background-color: #56bc86;
+color: #ffffff;
+border: none;
+border-radius: 5px;
+padding: 8px 16px;
+font-size: 14px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+font-weight: bold;
+
+
+&:hover {
+  background-color: #2ce080;
+}
 `;

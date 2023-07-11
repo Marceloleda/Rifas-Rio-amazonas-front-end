@@ -6,8 +6,8 @@ import StyledComponentsRegistry from './registry'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Rifas Rio Amazonas',
-  description: 'Cria rifas online',
+  title: 'Rifas Beneficente Rio Amazonas',
+  description: 'Crie sua rifa online aqui! Precisa fazer uma Rifa para sua faculdade, igreja ou escola? temos a solução prática e eficiente! Não gaste mais dinheiro imprimindo papéis.',
 }
 
 export default function RootLayout(props) {

@@ -77,6 +77,8 @@ padding: 20px;
 flex:1;
 box-sizing: border-box;
 background: #f2f2f2;
+height: 100vh;
+
 h2{
     margin-bottom: 50px;
 }

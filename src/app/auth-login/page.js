@@ -51,7 +51,7 @@ export default function Login(){
                         }required/>
 
                         <Botao type="submit">Entrar</Botao>
-                        <Botao2 type="submit">Entrar com sua conta Google</Botao2>
+                        {/* <Botao2 type="submit">Entrar com sua conta Google</Botao2> */}
                     </form>
                 </Forms>
 
