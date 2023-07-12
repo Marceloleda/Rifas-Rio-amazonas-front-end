@@ -6,15 +6,18 @@ import { useRouter } from 'next/navigation';
 export default function FindCampaign() {
   const router = useRouter();
   const [campaignsData, setCampaignData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     findCampaigns()
       .then((res) => {
         console.log(res.data);
         setCampaignData(res.data);
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err.message);
+        setIsLoading(false)
       });
   }, []);
 
@@ -46,7 +49,18 @@ export default function FindCampaign() {
     );
   });
 
-  return <Container>{rafflesCard}</Container>;
+  return (
+  <>
+    {isLoading ? (
+        <SpinnerContainer>
+          <StyledSpinner />
+        </SpinnerContainer>
+      ) : (
+    <Container>{rafflesCard}</Container>
+    )}
+
+  </>
+  );
 }
 
 const Container = styled.div`
@@ -68,7 +82,30 @@ const Raffle = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
 `;
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background: #f2f2f2;
+  align-items: center;
+  height: 100vh;
+`;
+const StyledSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid purple;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
 const DeleteButton = styled.button`
   position: absolute;
   bottom: 10px;

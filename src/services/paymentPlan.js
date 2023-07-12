@@ -2,7 +2,8 @@ import { createPaymentToPlan } from "@/services/api";
 
 
 export default function CreatePayments(typePlan, router) {
-  if (typePlan === "Plano Básico") {
+
+ if(typePlan === "Plano Básico") {
     createPaymentToPlan("basic")
         .then((res)=>{
             const mercadoPago = res.data?.point_of_interaction?.transaction_data?.ticket_url
@@ -49,7 +50,7 @@ export default function CreatePayments(typePlan, router) {
         }
     }))
   } else if (typePlan === "Plano Teste") {
-    router.push('/seller');
+    router.push('/sign-up');
   }
 
   return null;

@@ -51,7 +51,7 @@ export default function Plans(){
         <SupportPhone>Suporte via WhatsApp: {plan.support_phone? "Sim": "Não"}</SupportPhone>
         <CustomLogo>Customizar a própria logo: {plan.custom_logo? "Sim": "Não"}</CustomLogo>
           <PurchaseButton onClick={() => handlePurchaseButtonClick(plan)} >
-          {plan.name === "Plano Teste" ? "Adquirir" : "Comprar"}
+            {plan.name === "Plano Teste" ? "Cadastre-se" : "Comprar"}
           </PurchaseButton>
       </PlanCard>
     )
@@ -78,6 +78,8 @@ justify-content: space-around;
 flex-direction: wrap;
 box-sizing: border-box;
 margin-top: 20px;
+margin-bottom: 30px;
+
 
 `;
 
