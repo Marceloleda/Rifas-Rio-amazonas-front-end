@@ -35,8 +35,6 @@ export default function Sidebar({onFindCampaign}){
                 <Exit onClick={(()=>{exit()})}>Sair da conta</Exit>                
             </ExitWrapper>
 
-
-
         </SidebarWrapper>
     )
 }
@@ -48,7 +46,7 @@ const SidebarWrapper = styled.div`
   align-items: center;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  background: #88BDBC;
+  background: #c2efee;
   box-shadow: 2px 2px 5px rgba(1, 1, 1, 0.5);
   width: 250px;
   height: 100vh;
@@ -67,9 +65,6 @@ const ExitWrapper = styled.div`
 const Titlle = styled.h1`
 font-size: 30px;
 margin-bottom: 60px;
-`;
-const OptionIcon = styled.div`
-  margin-right: 10px;
 `;
 
 const Option = styled.div`

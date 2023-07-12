@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 
 
 export default function CreateCampaign() {
-    const router = useRouter()
+  const router = useRouter()
+  const [passwordError, setPasswordError] = useState(false);
   const [campaignData, setCampaignData] = useState({
     title: "",
     description: "",
@@ -55,39 +56,41 @@ export default function CreateCampaign() {
 
         <Forms>
           <form onSubmit={handleFormSubmit}>
+          <Label htmlFor="title">Título</Label>
             <Inserir
               id="title"
-              placeholder="Ex: cb 300f ou 22k no pix"
+              placeholder="ex: Uma máquina de lavar"
               value={campaignData.title}
               onChange={(e) =>
                 setCampaignData({ ...campaignData, title: e.target.value })
               }
             />
+            <Label htmlFor="description">Descrição</Label>
             <Inserir
               id="description"
               type="text"
-              placeholder="Descrição, ex: O sorteio eh baseado..."
+              placeholder="ex: Em prol a formatura do..."
               value={campaignData.description}
               onChange={(e) =>
                 setCampaignData({ ...campaignData, description: e.target.value })
               }
             />
-
+            <Label htmlFor="ticket_price">Valor de cota</Label>
             <Inserir
               id="ticket_price"
               type="text"
-              placeholder="Valor de cota"
+              placeholder="1.99"
               value={campaignData.ticket_price}
               onChange={(e) => {
                 setCampaignData({ ...campaignData, ticket_price: e.target.value });
                 formatDecimal(e.target.value);
               }}
             />
-
+            <Label htmlFor="total_tickets">Quantidade de cotas</Label>
             <Inserir
               id="total_tickets"
               type="number"
-              placeholder="Quantidade de cotas"
+              placeholder="100"
               value={campaignData.total_tickets}
               onChange={(e) =>
                 setCampaignData({ ...campaignData, total_tickets: e.target.value })
@@ -103,7 +106,11 @@ export default function CreateCampaign() {
                 setCampaignData({ ...campaignData, end_date: e.target.value })
               }
             /> */}
-
+            <ErrorMessage>
+              {campaignData.description?.length < 20
+              ? "A descrição deve ter pelo menos 20 caracteres."
+              : ""}
+            </ErrorMessage>
             <Botao type="submit">Criar campanha</Botao>
           </form>
         </Forms>
@@ -126,6 +133,20 @@ font-family: 'Raleway';
         color:black;
     }
 `;
+const ErrorMessage = styled.p`
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+`;
+const Label = styled.label`
+  font-family: 'Raleway';
+  font-weight: bold;
+  font-size: 16px;
+  color: #333333;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+`;
 
 const Forms = styled.div`
     form{
@@ -134,7 +155,7 @@ const Forms = styled.div`
             justify-content: center;
             align-items: center;
         }
-`
+`;
 const Inserir = styled.input`
     width: 326px;
     height: 58px;

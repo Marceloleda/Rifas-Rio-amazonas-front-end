@@ -26,7 +26,6 @@ export default function FindCampaign() {
   async function deleteRaffle(id) {
     deleteOneRaffle(id)
       .then((res) => {
-        console.log(res.data);
         setCampaignData((prevData) => prevData.filter((data) => data.id !== id));
       })
       .catch((err) => {

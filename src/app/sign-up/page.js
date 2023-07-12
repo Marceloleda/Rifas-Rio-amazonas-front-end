@@ -3,8 +3,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { signUpSend } from "@/services/api";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 export default function Cadastro(){
+    const router = useRouter()
     const [cadastro, setCadastro] = useState({
         name: '',
         email: '',
@@ -12,7 +15,9 @@ export default function Cadastro(){
         cpf:'',
         senha: '',
         confirmeSenha: ''
-    })
+    });
+
+    const [passwordError, setPasswordError] = useState(false);
 
     function Cadastro(event){
         event.preventDefault();
@@ -20,35 +25,40 @@ export default function Cadastro(){
         const {senha, confirmeSenha} = cadastro;
 
         if(senha === confirmeSenha){
-            const signUp = {
-                name: cadastro.name,
-                email: cadastro.email,
-                phone_number: cadastro.phone_number,
-                cpf: cadastro.cpf,
-                password_hash: cadastro.senha
+            if (senha.length < 8) {
+                setPasswordError(true);
+            } else {
+                setPasswordError(false);
+                const signUp = {
+                    name: cadastro.name,
+                    email: cadastro.email,
+                    phone_number: cadastro.phone_number,
+                    cpf: cadastro.cpf,
+                    password_hash: cadastro.senha
+                }
+                signUpSend(signUp)
+          .then((res) => {
+            Swal.fire('Cadastrado com sucesso!', '', 'success');
+            router.push('/auth-login')
+          })
+          .catch((err) => {
+            if (err.message === "Request failed with status code 409") {
+              Swal.fire('Voce ja esta cadastrado', '', 'error');
             }
-            signUpSend(signUp)
-                .then((res)=>{
-                alert("Cadastrado com sucesso!")
-            })
-                .catch(err=>{
-                if(err.message === "Request failed with status code 409"){
-                    alert(`Voce ja esta cadastrado `)
-                }
-                if(err.message === "Request failed with status code 422"){
-                    alert(`Verifique se seus dados foram digitados corretamente`)
-                }
-                if(err.message === "Network Error"){
-                    alert(`Erro de conexao, tente novamente mais tarde`)
-                }
-               
-                alert(`Verifique seus dados e tente novamente ;-)`)
-                console.log(err.message)
-            })
-        }else{
-            alert("As senhas nao conferem! Coloque as senhas iguais ;-)")
+            if (err.message === "Request failed with status code 422") {
+              Swal.fire('Verifique se seus dados foram digitados corretamente', '', 'error');
+            }
+            if (err.message === "Network Error") {
+              Swal.fire('Erro de conexao, tente novamente mais tarde', '', 'error');
+            }
+            console.log(err.message);
+            });
+            }
+        } else {
+            setPasswordError(true);
         }
     }
+    
     return(
         <>
             <Conteiner>
@@ -74,12 +84,20 @@ export default function Cadastro(){
                         setCadastro({...cadastro, confirmeSenha: e.target.value})
                         }/>
 
+                        {passwordError && (
+                        <ErrorMessage>
+                            {cadastro.senha?.length < 8
+                            ? "A senha deve ter pelo menos 8 caracteres."
+                            : "As senhas não conferem! Coloque as senhas iguais ;-)"}
+                        </ErrorMessage>
+                        )}
+
                         <Botao type="submit">Cadastar</Botao>
                     </form>
                 </Forms>
 
                 <Entrar>
-                    <Link href={`/`} style={{ textDecoration: 'none' }}>
+                    <Link href={`/auth-login`} style={{ textDecoration: 'none' }}>
                         <h2>Já tem uma conta? Entre agora!</h2>
                     </Link>
                 </Entrar>
@@ -87,8 +105,9 @@ export default function Cadastro(){
         </>
     );
 }
+
 const Conteiner = styled.div`
-font-family: 'Raleway';
+    font-family: 'Raleway';
     display:flex;
     justify-content: center;
     align-items: center;
@@ -97,17 +116,17 @@ font-family: 'Raleway';
     h1{
         font-family: 'Saira Stencil One', cursive;
         font-size: 32px;
-        color:white;
+        color: #333333;
     }
 `;
 
 const Forms = styled.div`
     form{
-            display:flex;
-            flex-direction:column;
-            justify-content: center;
-            align-items: center;
-        }
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
+    }
 `
 const Inserir = styled.input`
     width: 326px;
@@ -115,7 +134,7 @@ const Inserir = styled.input`
     margin-bottom: 16px;
     background: #FFFFFF;
     border: 1px solid #D5D5D5;
-    border-radius: 5px;
+    border-radius: 16px;
     padding: 10px;
     box-sizing: border-box;
     &:first-child{
@@ -123,16 +142,16 @@ const Inserir = styled.input`
     }
 `;
 const Botao = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 326px;
-height: 46px;
-background: green;
-border-radius: 5px;
-border:none;
-cursor: pointer;
-font-family: 'Raleway';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 326px;
+    height: 46px;
+    background: green;
+    border-radius: 15px;
+    border:none;
+    cursor: pointer;
+    font-family: 'Raleway';
     font-weight: 700;
     font-size: 20px;
     line-height: 26px;
@@ -142,8 +161,14 @@ font-family: 'Raleway';
 const Entrar = styled.div`
     margin-top: 35px;
     h2{
-        color: #FFFFFF;
+        color: #333333;
         font-size: 15px;
         font-weight: 700;
     }
+`;
+
+const ErrorMessage = styled.p`
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
 `;

@@ -57,7 +57,7 @@ export default function Login(){
 
                 <Cadastro>
                     <Link href={"/sign-up"} style={{ textDecoration: 'none' }}>
-                        <h2>Primeira vez? Cadastre-se!</h2>
+                        <h2>Primeira vez? Clique aqui e cadastre-se!</h2>
                     </Link>
                 </Cadastro>
             </Conteiner>
@@ -92,7 +92,7 @@ const Inserir = styled.input`
     margin-bottom:16px;
     background: #FFFFFF;
     border: 1px solid #D5D5D5;
-    border-radius: 5px;
+    border-radius: 16px;
     padding: 10px;
     box-sizing: border-box;
 
@@ -110,7 +110,7 @@ const Botao = styled.button`
     margin-bottom:16px;
 
     background: green;
-    border-radius: 5px;
+    border-radius: 15px;
     border:none;
     cursor: pointer;
     font-family: 'Roboto';
@@ -146,7 +146,7 @@ const Cadastro = styled.div`
     margin-top: 35px;
     h2{
         font-family: 'Raleway';
-        color: #FFFFFF;
+        color: #333333;
         font-size: 15px;
         font-weight: 700;
     }
