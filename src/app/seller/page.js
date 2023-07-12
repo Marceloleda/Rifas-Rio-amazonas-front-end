@@ -24,6 +24,10 @@ export default function Seller(){
         setShowFindCampaign(true);
         setShowCreateCampaign(false);
       };
+      const handleRefresh = () => {
+        setShowFindCampaign(false);
+        setShowCreateCampaign(false);
+      };
 
     useEffect(()=>{
         findUser()
@@ -47,9 +51,8 @@ export default function Seller(){
               </SpinnerContainer>
               ) : (
                 <SellerPageWrapper>
-                    <Sidebar onFindCampaign={handleFindCampaign}/>
+                    <Sidebar onFindCampaign={handleFindCampaign} onHome={handleRefresh}/>
                     <SellerPage>
-
                         <HeaderMini>
                             <h1>Dashboard</h1>
                         </HeaderMini>
@@ -58,7 +61,12 @@ export default function Seller(){
                             <h3>{user.plans?.name}</h3>                
                         </DataUser>
                         {(!showCreateCampaign && !showFindCampaign) && (
+                          <Blocks>
                             <Block onClick={handleCreateCampaign}>Criar Campanha</Block>
+                            {/* <Block onClick={handleCreateCampaign}>
+                              <h3>Receber pagamentos</h3>
+                            </Block> */}
+                          </Blocks>
                         )}
                         {showCreateCampaign && <CreateCampaign />}
                         {showFindCampaign && <FindCampaign />}
@@ -130,19 +138,26 @@ justify-content: center;
 align-items: center;
 color: black;
 font-size: 30px;
-height: 80px;
-widght:80px;
+height: 220px;
+width:220px;
+margin-left: 30px;
 cursor: pointer;
 &:hover {
     background-color: #ff847c;
 }
+padding:15px;
 border-radius: 20px;
 border: 1px solid black;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+h3{
+  font-size:20px;
+}
 
 `;
 const Blocks = styled.div`
 display: flex;
+width:100%;
+
 
 `;
 const DataUser = styled.div`

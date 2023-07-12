@@ -4,4 +4,6 @@
 body {
   /* background: linear-gradient(to bottom, #f2f7fa, #d7e9f2, #b9dceb, #9acfe4, #7dc5e7, #5db5d8, #449fc8, #2e89b7); */
   background: #E0F1EF;
+  overflow: hidden;
+
 }

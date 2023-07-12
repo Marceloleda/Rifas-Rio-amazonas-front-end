@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { createRaffle } from "@/services/api";
 import { useRouter } from 'next/navigation';
+import Swal from "sweetalert2";
 
 
 export default function CreateCampaign() {
@@ -16,43 +17,46 @@ export default function CreateCampaign() {
   });
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const totalTicketsNumber = parseInt(campaignData.total_tickets, 10);
-    createRaffle({...campaignData, total_tickets: totalTicketsNumber})
-      .then((res) => {
-        alert("Cadastrado com sucesso!");
-        router.push("/seller")
-      })
-      .catch((err) => {
-        if (err.message === "Request failed with status code 409") {
-          alert(`Já está cadastrado`);
-        }
-        if (err.message === "Request failed with status code 422") {
-          alert(`Verifique se seus dados foram digitados corretamente`);
-        }
-        if (err.message === "Network Error") {
-          alert(`Erro de conexão, tente novamente mais tarde`);
-        }
-
-        console.log(err.message);
-      });
+    if(campaignData.description?.length < 20) setPasswordError(true)
+    else{
+      const totalTicketsNumber = parseInt(campaignData.total_tickets, 10);
+      createRaffle({...campaignData, total_tickets: totalTicketsNumber})
+        .then((res) => {
+          Swal.fire('Cadastrado com sucesso!', '', 'success');
+          router.push("/seller")
+        })
+        .catch((err) => {
+          if (err.message === "Request failed with status code 403") {
+            Swal.fire({
+              icon: 'error',
+              title: 'Plano insuficiente',
+              text: 'Para realizar esta ação é necessário realizar um upgrade de plano.',
+              showCancelButton: true,
+              confirmButtonColor: '#b972e0',
+              cancelButtonColor: 'red',
+              confirmButtonText: 'Upgrade de plano',
+              cancelButtonText: 'Cancelar',
+            }).then((result) => {
+              if (result.isConfirmed) router.push('/')
+            });
+          }
+        });
+    }
   };
   function formatDecimal(value) {
     let sanitized = value.replace(/[^0-9]/g, '');
-  
     let numericValue = Number(sanitized);
   
     if (!isNaN(numericValue)) {
       let formattedValue = (numericValue / 100).toFixed(2);
-  
       setCampaignData({ ...campaignData, ticket_price: formattedValue });
     }
   }
   
-  
   return (
     <>
       <Conteiner>
-        <h4>Criar Campanha</h4>
+        <h4>Crie sua campanha</h4>
 
         <Forms>
           <form onSubmit={handleFormSubmit}>
@@ -64,6 +68,7 @@ export default function CreateCampaign() {
               onChange={(e) =>
                 setCampaignData({ ...campaignData, title: e.target.value })
               }
+              required
             />
             <Label htmlFor="description">Descrição</Label>
             <Inserir
@@ -79,12 +84,14 @@ export default function CreateCampaign() {
             <Inserir
               id="ticket_price"
               type="text"
-              placeholder="1.99"
+              placeholder="R$ 1.99"
               value={campaignData.ticket_price}
               onChange={(e) => {
                 setCampaignData({ ...campaignData, ticket_price: e.target.value });
                 formatDecimal(e.target.value);
               }}
+              required
+
             />
             <Label htmlFor="total_tickets">Quantidade de cotas</Label>
             <Inserir
@@ -95,6 +102,7 @@ export default function CreateCampaign() {
               onChange={(e) =>
                 setCampaignData({ ...campaignData, total_tickets: e.target.value })
               }
+              required
             />
             {/* <h2>Data do sorteio</h2>
             <Inserir
@@ -106,11 +114,13 @@ export default function CreateCampaign() {
                 setCampaignData({ ...campaignData, end_date: e.target.value })
               }
             /> */}
-            <ErrorMessage>
-              {campaignData.description?.length < 20
-              ? "A descrição deve ter pelo menos 20 caracteres."
-              : ""}
-            </ErrorMessage>
+            {passwordError && (
+              <ErrorMessage>
+                {campaignData.description?.length < 20
+                ? "A descrição deve ter pelo menos 20 caracteres."
+                : ""}
+              </ErrorMessage>
+            )}
             <Botao type="submit">Criar campanha</Botao>
           </form>
         </Forms>
@@ -125,7 +135,6 @@ font-family: 'Raleway';
     display:flex;
     align-items: center;
     flex-direction: column;
-    height: 100%;
     h1{
         font-family: 'Roboto', sans-serif;
         font-weight: bold;

@@ -2,7 +2,7 @@
 
 import { styled } from "styled-components"
 import Image from 'next/image';
-import Logo from '../../assets/images/logo.png'
+import Logo from '../../assets/images/logo_main.png'
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

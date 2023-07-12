@@ -76,15 +76,16 @@ display: flex;
 // background: green;
 justify-content: space-around;
 flex-direction: wrap;
-width: 90%;
 box-sizing: border-box;
-padding: 50px;
+margin-top: 20px;
+
 `;
 
 const PlanCard = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  margin: 15px;
   width: 250px;
   height: 400px;
   background-color: #f2f2f2;

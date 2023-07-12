@@ -51,10 +51,7 @@ export default function FindCampaign() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  justify-content: space-around;
   flex-direction: wrap;
-  height: 100%;
   width: 100%;
 `;
 

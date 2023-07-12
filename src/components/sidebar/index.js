@@ -1,17 +1,12 @@
 'use client'
 import { styled } from "styled-components"
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import LogoSeller from '../../assets/images/logo_seler.jpeg'
+import Image from "next/image";
 
 //colocar a logo RA
-export default function Sidebar({onFindCampaign}){
+export default function Sidebar({onFindCampaign, onHome}){
     const router = useRouter()
-    const [refreshing, setRefreshing] = useState(false);
-
-    const handleRefresh = () => {
-        setRefreshing(true);
-        window.location.reload();
-      };
 
     const exit = ()=>{
         localStorage.setItem("token", '')
@@ -20,13 +15,22 @@ export default function Sidebar({onFindCampaign}){
     }
     return(
         <SidebarWrapper>
-            <Titlle>Rifas Rio Amazonas</Titlle>
+            
+            <Titlle>
+                <Image
+                src={LogoSeller} 
+                alt="Logo"
+                width={60} 
+                height={60} 
+                />
+                <p>Rifas Rio Amazonas</p>
+            </Titlle>
             <User>
                 <h2>
                     Bem vindo ao seu painel :)
                 </h2>
             </User>
-            <Option onClick={handleRefresh} disabled={refreshing}>Home</Option>
+            <Option onClick={onHome}>Home</Option>
             <Option>Buscar ganhador</Option>
             <Option onClick={onFindCampaign}>Minhas Campanhas</Option>
             <Option>Minha Conta</Option>
@@ -62,9 +66,16 @@ const ExitWrapper = styled.div`
     margin-top: auto;
   margin-bottom: 0; /* Remove a margem inferior */
 `;
-const Titlle = styled.h1`
-font-size: 30px;
+const Titlle = styled.div`
+display:flex;
 margin-bottom: 60px;
+justify-content: space-around;
+width:100%px;
+p{
+    font-size: 30px;
+    margin-left:10px;
+}
+
 `;
 
 const Option = styled.div`
