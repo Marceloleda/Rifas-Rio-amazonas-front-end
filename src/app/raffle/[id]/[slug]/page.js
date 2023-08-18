@@ -6,14 +6,14 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { BasicModal } from '@/components/buyerModal/page';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+// import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+// import Typography from '@mui/material/Typography';
+// import Box from '@mui/material/Box';
 
 
  
 export default function Page({ params, searchParams }) {
-  const [progress, setProgress] = useState(10);
+  // const [progress, setProgress] = useState(10);
   const router = useRouter();
   const [raffle, setRaffle] = useState([]);
   const [defaultValue, setDefaultValue] = useState(1);
@@ -35,19 +35,18 @@ export default function Page({ params, searchParams }) {
   //   );
   // }
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+  //   }, 800);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   useEffect(() => {
     findRaffle(params.id, params.slug)
       .then((res) => {
-        console.log(res.data)
         setRaffle(res.data);
         setIsLoading(false);
       })
