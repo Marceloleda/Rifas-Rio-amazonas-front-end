@@ -1,11 +1,11 @@
 'use client'
-import { buyTicket, findRaffle } from '@/services/api';
+import { buyTicket, findRaffle } from '../../../../services/api';
 import Image from 'next/image';
 import picLogo from '../../../../assets/images/picLogo.png'
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { BasicModal } from '@/components/buyerModal/page';
+import { BasicModal } from '../../../../components/buyerModal/page';
 // import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 // import Typography from '@mui/material/Typography';
 // import Box from '@mui/material/Box';

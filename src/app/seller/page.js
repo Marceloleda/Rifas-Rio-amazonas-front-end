@@ -1,12 +1,12 @@
 'use client'
 
-import { findUser } from "@/services/api";
-import Sidebar from "@/components/sidebar";
+import { findUser } from "../../services/api";
+import Sidebar from "../../components/sidebar/index";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import CreateCampaign from "../../components/createCampaign";
-import FindCampaign from "@/components/findCampaign";
+import FindCampaign from "../../components/findCampaign/index";
 
 export default function Seller(){
     const router = useRouter()

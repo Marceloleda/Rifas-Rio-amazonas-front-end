@@ -1,4 +1,4 @@
-import { deleteOneRaffle, findCampaigns } from "@/services/api";
+import { deleteOneRaffle, findCampaigns } from "../../services/api";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';

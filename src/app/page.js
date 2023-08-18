@@ -1,8 +1,8 @@
 'use client'
 
 import { styled } from 'styled-components'
-import Header from '@/components/header'
-import Plans from '@/components/plans'
+import Header from '../components/header/index'
+import Plans from '../components/plans/index'
 
 export default function Home() {
   return (

@@ -3,7 +3,7 @@
 import { styled } from "styled-components"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { buyTicket } from "@/services/api";
+import { buyTicket } from "../../services/api";
 
 export function BasicModal() {
   let dataRaffle

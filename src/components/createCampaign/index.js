@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import styled from "styled-components";
-import { createRaffle } from "@/services/api";
+import { createRaffle } from "../../services/api";
 import { useRouter } from 'next/navigation';
 import Swal from "sweetalert2";
 

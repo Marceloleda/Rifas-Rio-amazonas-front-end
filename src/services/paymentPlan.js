@@ -1,4 +1,4 @@
-import { createPaymentToPlan } from "@/services/api";
+import { createPaymentToPlan } from "./api"
 
 
 export default function CreatePayments(typePlan, router) {

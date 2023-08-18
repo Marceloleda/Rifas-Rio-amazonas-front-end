@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/sidebar/index.js", "src/services/api.js", "src/services/paymentPlan.js"  ],
   "exclude": [
     "node_modules"
   ]

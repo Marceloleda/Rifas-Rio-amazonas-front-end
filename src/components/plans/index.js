@@ -1,7 +1,7 @@
 'use client'
 
-import { findPlans } from "@/services/api";
-import CreatePayments from "@/services/paymentPlan";
+import { findPlans } from "../../services/api";
+import CreatePayments from "../../services/paymentPlan";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useRouter } from 'next/navigation';
