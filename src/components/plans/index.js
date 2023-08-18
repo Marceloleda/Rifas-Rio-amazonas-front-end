@@ -79,8 +79,6 @@ flex-direction: wrap;
 box-sizing: border-box;
 margin-top: 20px;
 margin-bottom: 30px;
-
-
 `;
 
 const PlanCard = styled.div`
@@ -93,7 +91,7 @@ const PlanCard = styled.div`
   background-color: #f2f2f2;
   border-radius: 40px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 2px 4px rgba(1, 1, 2, 1);
   border: 4px solid ${props => (props.isHighlighted ? '#00FF00' : '#ff847c')};
   font-family: 'Nunito', sans-serif;
 
@@ -179,6 +177,10 @@ padding: 12px 24px;
 font-size: 22px; 
 margin-top: auto; 
 cursor: pointer;
+border: 3px solid #4ba04f; 
+&:hover{
+  background: #4ba04f;
+}
 `;
 const SpinnerContainer = styled.div`
   display: flex;

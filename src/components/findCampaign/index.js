@@ -11,7 +11,6 @@ export default function FindCampaign() {
   useEffect(() => {
     findCampaigns()
       .then((res) => {
-        console.log(res.data);
         setCampaignData(res.data);
         setIsLoading(false)
       })

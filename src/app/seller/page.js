@@ -15,6 +15,7 @@ export default function Seller(){
     const [showFindCampaign, setShowFindCampaign] = useState(false);
     const [user, setUser] = useState({})
 
+
     const handleCreateCampaign = () => {
         setShowCreateCampaign(true);
         setShowFindCampaign(false);
@@ -32,14 +33,12 @@ export default function Seller(){
     useEffect(()=>{
         findUser()
             .then((res)=>{
-                console.log(res.data)
                 setUser(res.data)
                 setIsLoading(false);
-
             })
             .catch((err=>{
                 console.log(err.message)
-                setIsLoading(false);
+                setIsLoading(true);
             }))
     },[])
 

@@ -6,18 +6,48 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { BasicModal } from '@/components/buyerModal/page';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+
  
 export default function Page({ params, searchParams }) {
+  const [progress, setProgress] = useState(10);
   const router = useRouter();
   const [raffle, setRaffle] = useState([]);
   const [defaultValue, setDefaultValue] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   const showModal = searchParams?.modal;
+  // function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+  //   return (
+  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  //       <Box sx={{ width: '100%', mr: 1 }}>
+  //         <LinearProgress variant="determinate" {...props} />
+  //       </Box>
+  //       <Box sx={{ minWidth: 35 }}>
+  //         <Typography variant="body2" color="text.secondary">{`${Math.round(
+  //           props.value,
+  //         )}%`}</Typography>
+  //       </Box>
+  //     </Box>
+  //   );
+  // }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   useEffect(() => {
     findRaffle(params.id, params.slug)
       .then((res) => {
+        console.log(res.data)
         setRaffle(res.data);
         setIsLoading(false);
       })
@@ -71,13 +101,21 @@ export default function Page({ params, searchParams }) {
         </SpinnerContainer>
       ) : (
         <Conteiner>
-          <ImageRaffle>
-            <Image src={picLogo} alt="Logo" width={350} height={250} />
-          </ImageRaffle>
-
-          <h1>{raffle.title}</h1>
-          <h1>R$ {raffle.ticket_price}</h1>
-          <h1>Restam: {raffle.avaliable_tickets} tickets</h1>
+          <ResponsiveInfoRaffle>
+              <ResponsiveImageRaffle>
+                <Image src={picLogo} alt="Logo" width={350} height={300} />
+              </ResponsiveImageRaffle>
+              <div>
+                <h1>{raffle?.title}</h1>
+                <h1>Valor: R$ {raffle?.ticket_price}</h1>
+                <h2>Descrição: </h2>
+                <h3>{raffle?.description}</h3>
+              </div>
+          </ResponsiveInfoRaffle>
+          {/* <Box sx={{ width: '100%' }}>
+            <LinearProgressWithLabel value={progress} />
+          </Box>
+              <h1>Restam: {raffle?.avaliable_tickets} tickets</h1> */}
           <Plus>
             <SetNumber onClick={() => handleIncrementSet(5)}>+5</SetNumber>
             <SetNumber onClick={() => handleIncrementSet(10)}>+10</SetNumber>
@@ -112,24 +150,19 @@ export default function Page({ params, searchParams }) {
 
 
 const Conteiner = styled.div`
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    background: #f2f2f2;
+    background: #f9e5b6;
     flex-direction: column;
-    height: 100vh;
-    h1{
-        font-family: 'Roboto', sans-serif;
-        font-size: 32px;
-        color:black;
-    }
+    min-height: 100vh; 
 `;
 const SpinnerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  background: #f2f2f2;
-  align-items: center;
-  height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #f2f2f2;
+    align-items: center;
+    min-height: 100vh; 
 `;
 const StyledSpinner = styled.div`
   width: 50px;
@@ -146,6 +179,51 @@ const StyledSpinner = styled.div`
     100% {
       transform: rotate(360deg);
     }
+  }
+`;
+const InfoRaffle = styled.div`
+  display: flex;
+  border-radius:10px;
+  border: 1px solid black ;
+  background: #f7ecd2;
+  margin-top: 25px;
+  height: 300px;
+  width: 80%;
+  padding: 20px; 
+
+  div {
+    margin-right: 30px;
+  }
+  
+  h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 32px;
+    color: black;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+  
+  h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
+const ResponsiveInfoRaffle = styled(InfoRaffle)`
+  @media (max-width: 900px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #f7ecd2;
+    margin-top: 25px;
+    height: 70%;
+
+    padding: 20px; 
+    width: 90%; 
+    max-width: 800px; 
+
   }
 `;
 const Overlay = styled.div`
@@ -166,19 +244,45 @@ const ImageRaffle = styled.div`
 background:grey;
 width:350px;
 height: 250px;
-
+`;
+const ResponsiveImageRaffle = styled(ImageRaffle)`
+  @media (max-width: 900px) {
+    background:grey;
+    width:350px;
+    height: 250px;
+    margin-bottom: 50px;
+  }
 `;
 const ButtonBuy = styled.button`
-width:100px;
+width:200px;
 height: 50px;
+border-radius: 10px;
+background: #fc923c;
+border: none;
+border: 3px solid #f77811 ;
+cursor:pointer;
+&:hover{
+  background: #f77811;
+}
 `;
 const ButtonQuantity = styled.button`
   width: 80px;
   height: 55px;
   background: red;
+  border-radius: 15px;
+  cursor:pointer;
+  border: none;
+  border: 2px solid #961701 ;
+  &:hover{
+    background: #961701;
+  }
 
   &:nth-child(3) {
     background: #3ee83e;
+    border: 3px solid #319901 ;
+    &:hover{
+      background: #319901;
+    }
   }
 `;
 const InputQuantity = styled.input`
@@ -187,6 +291,11 @@ align-items: center;
 text-align: center;
 width:80px;
 height: 50px;
+border-radius: 15px;
+border: none;
+border: 1px solid #f77811 ;
+
+
 `;
 const Quatity = styled.div`
 display:flex;
@@ -198,6 +307,13 @@ const SetNumber = styled.button`
 display:flex;
 justify-content:center;
 align-items:center;
+border:none;
+cursor: pointer;
+border-radius:10px;
+border: 3px solid #13f77d ;
+&:hover{
+  background: #13f77d;
+}
 
 width: 100px;
 height: 30px;

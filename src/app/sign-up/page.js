@@ -114,10 +114,25 @@ const Conteiner = styled.div`
     flex-direction: column;
     height: 100vh;
     h1{
-        font-family: 'Saira Stencil One', cursive;
+        font-family: 'Raleway', sans-serif;
         font-size: 32px;
         color: #333333;
     }
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to bottom, #b3d0f7 0%, #7aa9eb 50%, #b3d0f7 100%);
+    background-size: 100% 200%;
+    animation: riverFlow 10s linear infinite;
+    @keyframes riverFlow {
+        0%, 100% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 0 100%;
+        }
+      }
 `;
 
 const Forms = styled.div`
@@ -157,12 +172,14 @@ const Botao = styled.button`
     line-height: 26px;
     text-align: center;
     color: #FFFFFF;
+    font-family: 'Raleway', sans-serif;
 `;
 const Entrar = styled.div`
     margin-top: 35px;
     h2{
+        font-family: 'Raleway', sans-serif;
         color: #333333;
-        font-size: 15px;
+        font-size: 20px;
         font-weight: 700;
     }
 `;
