@@ -2,7 +2,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { signUpSend } from "@/services/api";
+import { signUpSend } from "../../services/api";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
