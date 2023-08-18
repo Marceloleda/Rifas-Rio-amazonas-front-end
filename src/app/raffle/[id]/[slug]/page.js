@@ -102,7 +102,7 @@ export default function Page({ params, searchParams }) {
         <Conteiner>
           <ResponsiveInfoRaffle>
               <ResponsiveImageRaffle>
-                <Image src={picLogo} alt="Logo" width={350} height={300} />
+                <img src={picLogo} alt="Logo"   />
               </ResponsiveImageRaffle>
               <div>
                 <h1>{raffle?.title}</h1>
@@ -213,15 +213,16 @@ const ResponsiveInfoRaffle = styled(InfoRaffle)`
   @media (max-width: 900px) {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     background: #f7ecd2;
     margin-top: 25px;
     height: 70%;
 
-    padding: 20px; 
-    width: 90%; 
+    padding: 15px; 
+    width: 70%; 
     max-width: 800px; 
+    min-width: 350px; 
+
 
   }
 `;
@@ -243,13 +244,17 @@ const ImageRaffle = styled.div`
 background:grey;
 width:350px;
 height: 250px;
+
 `;
 const ResponsiveImageRaffle = styled(ImageRaffle)`
   @media (max-width: 900px) {
     background:grey;
-    width:350px;
+    width:100%;
     height: 250px;
-    margin-bottom: 50px;
+    img{
+      width:100%;
+      height: 250px;
+    }
   }
 `;
 const ButtonBuy = styled.button`
