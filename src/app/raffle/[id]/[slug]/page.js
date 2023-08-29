@@ -1,11 +1,15 @@
 'use client'
 import { buyTicket, findRaffle } from '../../../../services/api';
+import Galleria from "../../../../components/galleria/index";
+import Logo from '../../../../assets/images/logo_main.png'
+import Link from "next/link";
 import Image from 'next/image';
 import picLogo from '../../../../assets/images/picLogo.png'
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { BasicModal } from '../../../../components/buyerModal/page';
+import Header from '../../../../components/header';
 // import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 // import Typography from '@mui/material/Typography';
 // import Box from '@mui/material/Box';
@@ -100,13 +104,25 @@ export default function Page({ params, searchParams }) {
         </SpinnerContainer>
       ) : (
         <Conteiner>
+          <ConteinerHeader>
+            <Image
+               src={Logo} 
+               alt="Logo"
+               width={75} 
+               height={75}
+               style={{marginRight: "60px"}} 
+            />
+            <h1>Rifas Rio Amazonas</h1>
+        </ConteinerHeader>
+          <ResponsiveImageRaffle>
+            <Galleria/>
+          </ResponsiveImageRaffle>
           <ResponsiveInfoRaffle>
-              <ResponsiveImageRaffle>
-                <img src={picLogo} alt="Logo"   />
-              </ResponsiveImageRaffle>
               <div>
                 <h1>{raffle?.title}</h1>
-                <h1>Valor: R$ {raffle?.ticket_price}</h1>
+                <ModalPrice>
+                  R$ {raffle?.ticket_price}
+                </ModalPrice>
                 <h2>Descrição: </h2>
                 <h3>{raffle?.description}</h3>
               </div>
@@ -134,7 +150,7 @@ export default function Page({ params, searchParams }) {
             <ButtonQuantity onClick={handleIncrement}>+</ButtonQuantity>
           </Quatity>
           <Total_Value>Total: R$ {totalPrice}</Total_Value>
-          <ButtonBuy onClick={modal}>Comprar</ButtonBuy>
+          <ResponsiveButtonBuy onClick={modal}>Comprar</ResponsiveButtonBuy>
           {showModal && (
             <>
               <BasicModal />
@@ -152,9 +168,31 @@ const Conteiner = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f9e5b6;
+    background: #f7f2e6;
     flex-direction: column;
     min-height: 100vh; 
+`;
+const ConteinerHeader = styled.div`
+    position: top;
+    background-color: #D6E5E3; 
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    h1{
+        font-family: 'Nunito', sans-serif;
+        font-size: 40px; 
+        font-weight: 700;
+
+    }
+    h2{
+        font-size: 25px; 
+        color: black; 
+    }
+
 `;
 const SpinnerContainer = styled.div`
     display: flex;
@@ -184,22 +222,17 @@ const InfoRaffle = styled.div`
   display: flex;
   border-radius:10px;
   border: 1px solid black ;
-  background: #f7ecd2;
+  // background: #f7ecd2;
+  background: #EAE639;
   margin-top: 25px;
-  height: 300px;
   width: 80%;
-  padding: 20px; 
+  padding: 15px; 
 
-  div {
-    margin-right: 30px;
-  }
-  
   h1 {
     font-family: 'Raleway', sans-serif;
     font-size: 32px;
     color: black;
     margin-bottom: 25px;
-    margin-top: 25px;
   }
   
   h2 {
@@ -214,16 +247,14 @@ const ResponsiveInfoRaffle = styled(InfoRaffle)`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background: #f7ecd2;
+    background: #EAE639;
     margin-top: 25px;
     height: 70%;
 
     padding: 15px; 
-    width: 70%; 
+    width: 80%; 
     max-width: 800px; 
     min-width: 350px; 
-
-
   }
 `;
 const Overlay = styled.div`
@@ -238,37 +269,55 @@ font-family: 'Roboto', sans-serif;
 margin-bottom: 30px;
 font-size:35px;
 color:black;
+font-weight: bold;
 
 `;
 const ImageRaffle = styled.div`
-background:grey;
-width:350px;
-height: 250px;
+margin-top: 25px;
 
 `;
 const ResponsiveImageRaffle = styled(ImageRaffle)`
   @media (max-width: 900px) {
-    background:grey;
-    width:100%;
-    height: 250px;
-    img{
-      width:100%;
-      height: 250px;
-    }
+    margin-top: 0px;
+    width: 450px
+    
   }
 `;
 const ButtonBuy = styled.button`
-width:200px;
+width:400px;
 height: 50px;
 border-radius: 10px;
 background: #fc923c;
+font-weight: bold;
+margin-bottom: 80px;
 border: none;
-border: 3px solid #f77811 ;
+border: 2px solid #f77811 ;
 cursor:pointer;
+
 &:hover{
   background: #f77811;
 }
 `;
+const ModalPrice = styled.div`
+display: flex;
+justify-content: center;
+font-size: 25px;
+width:200px;
+height: auto;
+margin-bottom: 25px;
+
+background: #fc923c;
+border-radius: 10px;
+
+`;
+const ResponsiveButtonBuy = styled(ButtonBuy)`
+  @media (max-width: 900px) {
+    width:200px;
+    margin-bottom: 80px;
+
+  }
+`;
+
 const ButtonQuantity = styled.button`
   width: 80px;
   height: 55px;
@@ -277,15 +326,17 @@ const ButtonQuantity = styled.button`
   cursor:pointer;
   border: none;
   border: 2px solid #961701 ;
+  font-size: 30px;
+
   &:hover{
-    background: #961701;
+    background: #ff5c3f;
   }
 
   &:nth-child(3) {
     background: #3ee83e;
-    border: 3px solid #319901 ;
+    border: 2px solid #0cd11c ;
     &:hover{
-      background: #319901;
+      background: #13f77d;
     }
   }
 `;
@@ -297,9 +348,7 @@ width:80px;
 height: 50px;
 border-radius: 15px;
 border: none;
-border: 1px solid #f77811 ;
-
-
+font-size: 25px;
 `;
 const Quatity = styled.div`
 display:flex;
@@ -314,14 +363,14 @@ align-items:center;
 border:none;
 cursor: pointer;
 border-radius:10px;
-border: 3px solid #13f77d ;
+border: 2px solid #13f77d ;
 &:hover{
   background: #13f77d;
 }
 
 width: 100px;
 height: 30px;
-background: #84f4b6;
+background: #C2EFEE;
 
 `;
 const Plus = styled.div`

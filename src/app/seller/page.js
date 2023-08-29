@@ -83,7 +83,7 @@ flex-direction: column;
 padding: 20px;
 flex:1;
 box-sizing: border-box;
-background: #f2f2f2;
+background: #f7f2e6;
 height: 100vh;
 
 h2{

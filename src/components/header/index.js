@@ -14,7 +14,7 @@ export default function Header(){
       setToken(storedToken);
     }, []);
     return (
-        <Conteiner>
+        <ConteinerHeader>
             <Image
                src={Logo} 
                alt="Logo"
@@ -29,11 +29,11 @@ export default function Header(){
                     <h2>Login</h2>
                 </Link>
                 }
-        </Conteiner>
+        </ConteinerHeader>
     )
 }
 
-const Conteiner = styled.div`
+const ConteinerHeader = styled.div`
     position: fixed;
     background-color: #D6E5E3; 
     box-sizing: border-box;
@@ -45,7 +45,7 @@ const Conteiner = styled.div`
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     h1{
         font-family: 'Nunito', sans-serif;
-        font-size: 60px; 
+        font-size: 40px; 
     }
     h2{
         font-size: 25px; 

@@ -28,7 +28,7 @@ export default function Login(){
             console.log(response.data)
             localStorage.setItem("token", response.data.Token)
             alert('logado com sucesso')
-            router.push("/");
+            router.push("/seller");
         })
             .catch(err => {
             Swal.fire({
