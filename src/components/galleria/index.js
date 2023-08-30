@@ -17,7 +17,7 @@ export default function PositionDemo() {
 
     return (
             <StyledCard>
-                <Galleria value={images} style={{ maxWidth: '600px', minWidth: '450px' }} 
+                <Galleria value={images} style={{ maxWidth: '600px', minWidth: '315px' }} 
                 showThumbnails={false} 
                 showIndicators={false} 
                 showIndicatorsOnItem={false} 

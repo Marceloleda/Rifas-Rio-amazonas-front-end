@@ -131,11 +131,11 @@ export default function Page({ params, searchParams }) {
             <LinearProgressWithLabel value={progress} />
           </Box>
               <h1>Restam: {raffle?.avaliable_tickets} tickets</h1> */}
-          <Plus>
+          <ResponsiveButtonsPlus>
             <SetNumber onClick={() => handleIncrementSet(5)}>+5</SetNumber>
             <SetNumber onClick={() => handleIncrementSet(10)}>+10</SetNumber>
             <SetNumber onClick={() => handleIncrementSet(20)}>+20</SetNumber>
-          </Plus>
+          </ResponsiveButtonsPlus>
 
           <Quatity>
             <ButtonQuantity onClick={handleDecrement}>-</ButtonQuantity>
@@ -225,7 +225,7 @@ const InfoRaffle = styled.div`
   // background: #f7ecd2;
   background: #EAE639;
   margin-top: 25px;
-  width: 80%;
+  width: 50%;
   padding: 15px; 
 
   h1 {
@@ -252,9 +252,9 @@ const ResponsiveInfoRaffle = styled(InfoRaffle)`
     height: 70%;
 
     padding: 15px; 
-    width: 80%; 
+    width: 85%; 
     max-width: 800px; 
-    min-width: 350px; 
+    min-width: 315px; 
   }
 `;
 const Overlay = styled.div`
@@ -279,7 +279,7 @@ margin-top: 25px;
 const ResponsiveImageRaffle = styled(ImageRaffle)`
   @media (max-width: 900px) {
     margin-top: 0px;
-    width: 450px
+
     
   }
 `;
@@ -301,9 +301,10 @@ cursor:pointer;
 const ModalPrice = styled.div`
 display: flex;
 justify-content: center;
+align-items: center;
 font-size: 25px;
-width:200px;
-height: auto;
+width:auto;
+height: 30px;
 margin-bottom: 25px;
 
 background: #fc923c;
@@ -375,10 +376,17 @@ background: #C2EFEE;
 `;
 const Plus = styled.div`
 display:flex;
-justify-content: space-around;
+justify-content: space-between;
 margin-top: 30px;
 margin-bottom: 0px;
 
 width: 400px;
 height: 80px;
 `;
+
+const ResponsiveButtonsPlus = styled(Plus)`
+  @media (max-width: 900px) {
+    width: 320px;
+  }
+`;
+
