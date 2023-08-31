@@ -225,7 +225,8 @@ const InfoRaffle = styled.div`
   // background: #f7ecd2;
   background: #EAE639;
   margin-top: 25px;
-  width: 50%;
+  width: auto;
+  max-width: 580px; 
   padding: 15px; 
 
   h1 {
@@ -253,7 +254,7 @@ const ResponsiveInfoRaffle = styled(InfoRaffle)`
 
     padding: 15px; 
     width: 85%; 
-    max-width: 800px; 
+    max-width: 580px; 
     min-width: 315px; 
   }
 `;
