@@ -25,11 +25,11 @@ function sendBuyTicket(event){
   quantity: dataRaffle.quantity,
   total: dataRaffle.total
   }
-  console.log(body)
   buyTicket(body)
   .then((res) => {
     const mercadoPago = res.data
-    router.push(`/payment-buyer/${mercadoPago.id}`)
+    // router.push(`/payment-buyer/${mercadoPago.id}`)
+    router.push(`${mercadoPago?.point_of_interaction?.transaction_data?.ticket_url}`)
   })
   .catch(err => {console.log(err)});
 }
