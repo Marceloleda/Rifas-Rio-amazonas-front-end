@@ -52,6 +52,7 @@ export default function Page({ params, searchParams }) {
     findRaffle(params.id, params.slug)
       .then((res) => {
         setRaffle(res.data);
+        console.log(res.data)
         setIsLoading(false);
       })
       .catch((err) => {
@@ -63,6 +64,13 @@ export default function Page({ params, searchParams }) {
   const totalPrice = (defaultValue * raffle.ticket_price).toFixed(2); 
 
   const modal = () => {
+    if(defaultValue < 1){
+      return alert("É NECESSARIO A QUANTIDADE DE PELO MENOS 1 NÚMERO DA SORTE")
+    }
+    if(defaultValue > raffle?.total_tickets){
+      return alert("NÃO É POSSIVEL COMPAR ESSA QUANTIDADE")
+    }
+
     const body = {
       raffleId: params.id,
       quantity: defaultValue,
