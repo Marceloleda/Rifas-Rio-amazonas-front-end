@@ -7,6 +7,9 @@ import { buyTicket } from "../../services/api";
 
 export function BasicModal() {
   let dataRaffle
+  const [isLoading, setIsLoading] = useState(true);
+  const [payment, setPayment] = useState()
+
   if (typeof window !== 'undefined') {
     const bodyString = localStorage.getItem("bodyRaffle");
     dataRaffle = JSON.parse(bodyString);
@@ -26,12 +29,16 @@ function sendBuyTicket(event){
   total: dataRaffle.total
   }
   buyTicket(body)
+  setIsLoading(true)
   .then((res) => {
     const mercadoPago = res.data
     // router.push(`/payment-buyer/${mercadoPago.id}`)
+    setIsLoading(false);
     router.push(`${mercadoPago?.point_of_interaction?.transaction_data?.ticket_url}`)
   })
   .catch(err => {console.log(err)});
+  setIsLoading(false);
+
 }
     return (
       <ModalContainer>
@@ -51,7 +58,12 @@ function sendBuyTicket(event){
                         setBuyer({...buyer, phone_number: e.target.value})
                         }required/>
 
-                        <Botao type="submit">Continuar</Botao>
+                        <Botao type="submit" isLoading={isLoading}>{
+                          isLoading? 
+                          (<SpinnerContainer>
+                            <StyledSpinner />
+                          </SpinnerContainer>): "Continuar"
+                        }</Botao>
                     </form>
                 </Forms>
             <div>
@@ -61,7 +73,30 @@ function sendBuyTicket(event){
         </ContentWrapper>
       </ModalContainer>
     );
+}
+
+const SpinnerContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const StyledSpinner = styled.div`
+  width: 30px;
+  height: 30px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid purple;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
+`;
 const ModalContainer = styled.div`
   position: fixed;
   z-index: 10;
@@ -142,15 +177,15 @@ height: 46px;
 background: green;
 border-radius: 5px;
 border:none;
-cursor: pointer;
+
+cursor: ${(prop)=>prop.isLoading === true? "": "pointer" };
 font-family: 'Raleway';
     font-weight: 700;
     font-size: 20px;
     line-height: 26px;
     text-align: center;
     color: #FFFFFF;
-
     &:hover {
-      background-color: #28e241;
+      ${(prop)=>prop.isLoading === true? "": "background-color: #28e241;" }
     }
 `;
